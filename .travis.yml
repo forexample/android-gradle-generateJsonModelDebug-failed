@@ -1,0 +1,72 @@
+# OSX/Linux (https://github.com/travis-ci-tester/toolchain-table)
+
+# Workaround for https://github.com/travis-ci/travis-ci/issues/8363
+language:
+  - cpp
+
+# Container-based infrastructure (Linux)
+# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
+sudo:
+  - false
+
+dist:
+  - trusty
+
+# Install packages differs for container-based infrastructure
+# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-do-I-install-APT-sources-and-packages%3F
+# List of available packages:
+# * https://github.com/travis-ci/apt-package-whitelist/blob/master/ubuntu-trusty
+# List of available sources:
+# * https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - python3-pip
+      - g++-7
+
+      # For ogles_gpgpu (GL library)
+      - libgl1-mesa-dev
+
+      # For Gradle
+      - oracle-java8-set-default
+
+install:
+  # Info about OS
+  - uname -a
+
+  - wget "https://cmake.org/files/v3.11/cmake-3.11.0-rc3-Linux-x86_64.tar.gz"
+  - tar xf cmake-3.11.0-rc3-Linux-x86_64.tar.gz
+  - export CMAKE_DIR="`pwd`/cmake-3.11.0-rc3-Linux-x86_64"
+  - export PATH="${CMAKE_DIR}/bin:${PATH}"
+
+  - mkdir ninja
+  - cd ninja
+  - wget "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip"
+  - unzip ninja-linux.zip
+  - export PATH="`pwd`:${PATH}"
+  - cd ..
+
+  - wget https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip
+  - unzip android-ndk-r16b-linux-x86_64.zip > /dev/null
+  - export ANDROID_NDK="`pwd`/android-ndk-r16b"
+
+script:
+  # Create 'local.properties'
+  - echo "sdk.dir=${HOME}/android-sdk" >> local.properties
+  - echo "ndk.dir=${ANDROID_NDK}" >> local.properties
+  - echo "cmake.dir=${CMAKE_DIR}" >> local.properties
+
+  # https://stackoverflow.com/a/38381577
+  - mkdir -p /home/travis/android-sdk/licenses
+  - echo -e "\nd56f5187479451eabf01fb78af6dfcb131a6481e" > "${HOME}/android-sdk/licenses/android-sdk-license"
+
+  # https://stackoverflow.com/a/38339046
+  - echo "android.builder.sdkDownload=true" > gradle.properties
+
+  - ./gradlew assembleDebug -Parch=armeabi-v7a
+
+branches:
+  except:
+    - /^pr\..*/
