@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-
     defaultConfig {
         applicationId 'com.example.foo'
         minSdkVersion 24
@@ -10,20 +9,18 @@ android {
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=c++_static',
-                    '-DHUNTER_STATUS_DEBUG=ON',
-                    '-DCMAKE_VERBOSE_MAKEFILE=ON'
+                        '-DHUNTER_STATUS_DEBUG=ON',
+                        '-DCMAKE_VERBOSE_MAKEFILE=ON'
             }
         }
 
         version 5
     }
-
     externalNativeBuild {
         cmake {
-             path '../CMakeLists.txt'
+            path '../CMakeLists.txt'
         }
     }
-
     splits {
         if (project.hasProperty('arch')) {
             abi {
@@ -34,8 +31,7 @@ android {
 
                 universalApk false
             }
-        }
-        else {
+        } else {
             abi {
                 enable true
 
@@ -46,16 +42,16 @@ android {
             }
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
-    implementation "com.android.support:support-v4:27.0.2"
-    implementation "com.android.support:support-v13:27.0.2"
-    implementation "com.android.support:cardview-v7:27.0.2"
-    implementation "com.android.support:appcompat-v7:27.0.2"
+    implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.android.support:support-v13:27.0.2'
+    implementation 'com.android.support:cardview-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
 }
