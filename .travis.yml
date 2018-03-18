@@ -20,15 +20,7 @@ dist:
 # * https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
-      - python3-pip
-      - g++-7
-
-      # For ogles_gpgpu (GL library)
-      - libgl1-mesa-dev
-
       # For Gradle
       - oracle-java8-set-default
 
