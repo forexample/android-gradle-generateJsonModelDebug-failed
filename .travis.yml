@@ -57,7 +57,7 @@ script:
   # https://stackoverflow.com/a/38339046
   - echo "android.builder.sdkDownload=true" > gradle.properties
 
-  - ./gradlew assembleDebug -Parch=armeabi-v7a
+  - ./gradlew assembleDebug -Parch=armeabi-v7a --debug
 
 branches:
   except:
