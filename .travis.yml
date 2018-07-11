@@ -57,6 +57,11 @@ script:
   # https://stackoverflow.com/a/38339046
   - echo "android.builder.sdkDownload=true" > gradle.properties
 
+  # First build will hit issue:
+  # * https://issuetracker.google.com/issues/75268076
+  - ./gradlew assembleDebug -Parch=armeabi-v7a || echo "Ooops"
+
+  # Second should be fine:
   - ./gradlew assembleDebug -Parch=armeabi-v7a
 
 branches:
