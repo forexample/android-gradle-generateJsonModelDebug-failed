@@ -61,6 +61,8 @@ script:
   # * https://issuetracker.google.com/issues/75268076
   - ./gradlew assembleDebug -Parch=armeabi-v7a || echo "Ooops"
 
+  - ls ./app/.externalNativeBuild/cmake/debug/armeabi-v7a
+
   # Second should be fine:
   - ./gradlew assembleDebug -Parch=armeabi-v7a
 
