@@ -28,9 +28,9 @@ install:
   # Info about OS
   - uname -a
 
-  - wget "https://cmake.org/files/v3.11/cmake-3.11.0-rc3-Linux-x86_64.tar.gz"
-  - tar xf cmake-3.11.0-rc3-Linux-x86_64.tar.gz
-  - export CMAKE_DIR="`pwd`/cmake-3.11.0-rc3-Linux-x86_64"
+  - wget "https://cmake.org/files/v3.11/cmake-3.11.4-Linux-x86_64.tar.gz"
+  - tar xf cmake-3.11.4-Linux-x86_64.tar.gz
+  - export CMAKE_DIR="`pwd`/cmake-3.11.4-Linux-x86_64"
   - export PATH="${CMAKE_DIR}/bin:${PATH}"
 
   - mkdir ninja
