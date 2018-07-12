@@ -57,14 +57,7 @@ script:
   # https://stackoverflow.com/a/38339046
   - echo "android.builder.sdkDownload=true" > gradle.properties
 
-  # First build will hit issue:
-  # * https://issuetracker.google.com/issues/75268076
-  - ./gradlew assembleDebug -Parch=arm64-v8a || echo "Ooops"
-
-  - ls ./app/.externalNativeBuild/cmake/debug/arm64-v8a
-
-  # Second should be fine:
-  - ./gradlew assembleDebug -Parch=arm64-v8a
+  - bin/jenkins.sh
 
 branches:
   except:
