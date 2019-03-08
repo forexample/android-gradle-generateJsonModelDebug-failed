@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.9.2)
 
+set(HUNTER_ROOT "${CMAKE_CURRENT_LIST_DIR}/__HUNTER" CACHE PATH "...")
+
 include(cmake/HunterGate.cmake)
 HunterGate(
     URL "https://github.com/ruslo/hunter/archive/v0.22.12.tar.gz"
